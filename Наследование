@@ -1,0 +1,12 @@
+class Animal {
+    void eat() {
+        System.out.println("Ест");
+    }
+}
+
+class Dog extends Animal {
+    void Gav() {
+        System.out.println("Гав");
+    }
+}
+//Польза:Не нужно повторять код. Если есть 10 животных, метод eat() пишется один раз в Animal, а не 10 раз
