@@ -1,0 +1,16 @@
+//Один вызов shape.area() работает по разному в зависимости от того, круг или квадрат
+abstract class Shape {
+    abstract double area();
+}
+
+class Circle extends Shape {
+    double r;
+    Circle(double r) { this.r = r; }
+    double area() { return Math.PI * r * r; }
+}
+
+class Square extends Shape {
+    double a;
+    Square(double a) { this.a = a; }
+    double area() { return a * a; }
+}
