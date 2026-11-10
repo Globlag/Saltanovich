@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+public class Calculator {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Введите выражение (например, 2 * 6.5): ");
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine().trim();
+            if (line.isEmpty()) break;
+
+            try {
+                System.out.println("= " + calculate(line));
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+            }
+            System.out.print("Введите выражение: ");
+        }
+    }
+
+    public static double calculate(String expr) {
+        // ожидаем  три токена: число операция число
+        String[] parts = expr.trim().split("\\s+");
+        if (parts.length != 3) {
+            throw new IllegalArgumentException(
+                    "Ожидается формат: <число> <операция> <число>");
+        }
+
+        double a, b;
+        try {
+            a = Double.parseDouble(parts[0]);
+            b = Double.parseDouble(parts[2]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Не удалось разобрать число: " + e.getMessage());
+        }
+
+        String op = parts[1];
+        switch (op) {
+            case "+": return a + b;
+            case "-": return a - b;
+            case "*": return a * b;
+            case "/":
+                if (b == 0) throw new IllegalArgumentException("Деление на ноль");
+                return a / b;
+            default:
+                throw new IllegalArgumentException("Неизвестная операция: " + op);
+        }
+    }
+}
