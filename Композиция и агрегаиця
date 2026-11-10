@@ -1,0 +1,19 @@
+// КОМПОЗИЦИЯ:Комнаты создаются вместе с домом и не переносятся в другой дом.
+class Room { Room() {} }
+class House {
+    private final List<Room> rooms = new ArrayList<>();
+    House(int n) { for (int i = 0; i < n; i++) rooms.add(new Room()); }
+}
+
+//АГРЕГАЦИЯ Книга существует и без библиотеки, может быть в другой библиотеке или у читателя
+class Book {
+    private final String title;
+    Book(String title) { this.title = title; }
+    String getTitle() { return title; }
+}
+
+class Library {
+    private final List<Book> books;
+    Library(List<Book> books) { this.books = new ArrayList<>(books); } // копия!
+    void list() { books.forEach(b -> System.out.println(b.getTitle())); }
+}
