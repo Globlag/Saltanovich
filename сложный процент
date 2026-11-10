@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class CompoundInterest {
+
+    /** Прямая задача: S = P * (1 + r)^n */
+    public static double futureValue(double principal, double rate, int periods) {
+        if (principal < 0) throw new IllegalArgumentException("Число не может быть отрицательным");
+        if (periods < 0)   throw new IllegalArgumentException("Периоды не могут быть отрицательными");
+        if (rate <= -1)    throw new IllegalArgumentException("Ставка должна быть > -100%");
+        return principal * Math.pow(1 + rate, periods);
+    }
+
+    /** Обратная задача: r = (S / P)^(1/n) - 1 */
+    public static double requiredRate(double principal, double target, int periods) {
+        if (principal <= 0) throw new IllegalArgumentException("Начальное число должно быть > 0");
+        if (target   <= 0) throw new IllegalArgumentException("Конечное число должно быть > 0");
+        if (periods  <= 0) throw new IllegalArgumentException("Периоды должны быть > 0");
+        return Math.pow(target / principal, 1.0 / periods) - 1;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Начальная сумма: ");
+        double p = sc.nextDouble();
+
+        System.out.print("Ставка за период (например, 5 для 5%): ");
+        double percent = sc.nextDouble();
+        double r = percent / 100.0;
+
+        System.out.print("Количество периодов: ");
+        int n = sc.nextInt();
+
+        double s = futureValue(p, r, n);
+        System.out.printf("Через %d периодов будет: %.2f%n", n, s);
+
+        System.out.print("Желаемая конечная сумма: ");
+        double target = sc.nextDouble();
+
+        double needed = requiredRate(p, target, n);
+        System.out.printf("Чтобы дойти от %.2f до %.2f за %d периодов, "
+                        + "нужна ставка %.4f%% за период%n",
+                p, target, n, needed * 100);
+    }
+}
